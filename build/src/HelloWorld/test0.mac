@@ -1,0 +1,13 @@
+ROUTINE test0
+main(msg="a student") public {
+
+	//パラメータを大文字化
+	Set msg=$ZCVT(msg,"U")
+
+	Set result="Hello Wolrd, I am "_msg
+	
+ 	//結果出力
+	Write result,!
+	
+	Quit
+}

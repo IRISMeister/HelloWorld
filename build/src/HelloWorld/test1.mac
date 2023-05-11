@@ -1,0 +1,14 @@
+ROUTINE test1
+main(msg="a student") public {
+	#dim tService as Ens.BusinessService
+	Set tSC = ##class(Ens.Director).CreateBusinessService("Direct",.tService)
+ 
+	If ($IsObject(tService)) {
+	  Set input = ##class(HelloWorld.Request.SayHello).%New()
+	  Set input.BodyText = msg
+	  Set tSC = tService.ProcessInput(input,.output)
+	}
+	w output.BodyText,!
+	
+	Q
+}
