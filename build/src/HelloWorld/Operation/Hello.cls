@@ -1,5 +1,5 @@
 /// 
-Class HelloWorld.Operation.SayHello Extends Ens.BusinessOperation [ ProcedureBlock ]
+Class HelloWorld.Operation.Hello Extends Ens.BusinessOperation [ ProcedureBlock ]
 {
 
 Parameter INVOCATION = "Queue";

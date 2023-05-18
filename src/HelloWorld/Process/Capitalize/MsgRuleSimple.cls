@@ -12,6 +12,7 @@ XData RuleDefinition [ XMLNamespace = "http://www.intersystems.com/rule" ]
 <constraint name="msgClass" value="HelloWorld.Request.SayHello"></constraint>
 <when condition="(Matches(Document.BodyText,&quot;.N&quot;))" comment="">
 <send transform="" target="HelloSQL"></send>
+<return></return>
 </when>
 <otherwise>
 <send transform="HelloWorld.Transform.Capitalize" target="Hello"></send>

@@ -7,7 +7,7 @@ XData ProductionDefinition
 <Production Name="HelloWorld.Production" TestingEnabled="true" LogGeneralTraceEvents="false">
   <Description></Description>
   <ActorPoolSize>2</ActorPoolSize>
-  <Item Name="SayHello" Category="" ClassName="HelloWorld.Operation.SayHello" PoolSize="1" Enabled="true" Foreground="false" DisableErrorTraps="false" InactivityTimeout="0" Comment="" LogTraceEvents="false" Schedule="">
+  <Item Name="Hello" Category="" ClassName="HelloWorld.Operation.Hello" PoolSize="1" Enabled="true" Foreground="false" DisableErrorTraps="false" InactivityTimeout="0" Comment="" LogTraceEvents="false" Schedule="">
     <Setting Target="Host" Name="ReplyCodeActions"></Setting>
     <Setting Target="Host" Name="RetryInterval">5</Setting>
     <Setting Target="Host" Name="AlertRetryGracePeriod">0</Setting>
@@ -27,7 +27,12 @@ XData ProductionDefinition
     <Setting Target="Host" Name="AlertOnError">0</Setting>
     <Setting Target="Host" Name="ArchiveIO">0</Setting>
   </Item>
-  <Item Name="SayHelloFromSomeone" Category="" ClassName="HelloWorld.Operation.SayHelloFromSomeone" PoolSize="1" Enabled="true" Foreground="false" DisableErrorTraps="false" InactivityTimeout="0" Comment="" LogTraceEvents="false" Schedule="">
+  <Item Name="DirectRouter" Category="" ClassName="HelloWorld.Service.DirectRouter" PoolSize="0" Enabled="true" Foreground="false" DisableErrorTraps="false" InactivityTimeout="0" Comment="" LogTraceEvents="false" Schedule="">
+    <Setting Target="Host" Name="AlertGracePeriod">0</Setting>
+    <Setting Target="Host" Name="AlertOnError">0</Setting>
+    <Setting Target="Host" Name="ArchiveIO">0</Setting>
+  </Item>
+  <Item Name="HelloSQL" Category="" ClassName="HelloWorld.Operation.HelloSQL" PoolSize="1" Enabled="true" Foreground="false" DisableErrorTraps="false" InactivityTimeout="0" Comment="" LogTraceEvents="false" Schedule="">
     <Setting Target="Host" Name="ReplyCodeActions"></Setting>
     <Setting Target="Host" Name="RetryInterval">5</Setting>
     <Setting Target="Host" Name="AlertRetryGracePeriod">0</Setting>

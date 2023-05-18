@@ -1,5 +1,5 @@
 /// 
-Class HelloWorld.Operation.SayHelloFromSomeone Extends Ens.BusinessOperation [ ProcedureBlock ]
+Class HelloWorld.Operation.HelloSQL Extends Ens.BusinessOperation [ ProcedureBlock ]
 {
 
 Parameter ADAPTER = "EnsLib.SQL.OutboundAdapter";

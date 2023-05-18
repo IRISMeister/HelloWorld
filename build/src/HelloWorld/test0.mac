@@ -1,13 +1,18 @@
 ROUTINE test0
+#include %occStatus
 main(msg="a student") public {
-
 	//パラメータを大文字化
 	Set msg=$ZCVT(msg,"U")
-
-	Set result="Hello Wolrd, I am "_msg
-	
+	//数値なら
+	If $ISVALIDNUM(msg) { Set msg=$$GetMessage(msg)	}
  	//結果出力
-	Write result,!
-	
-	Quit
+	Write "Hello Wolrd, I am "_msg,!
+}
+GetMessage(num) {
+	New $NAMESPACE
+	Set $NAMESPACE="USER"
+	Set result=##class(%SQL.Statement).%ExecDirect(,"select Name from Sample.Person where ID=?",num)
+	Set tSC=result.%Next()
+	If $$$ISOK(tSC) { Return result.Name }
+	Return ""
 }
