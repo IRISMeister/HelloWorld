@@ -1,10 +1,8 @@
 ROUTINE test0
 #include %occStatus
 main(msg="World") public {
-	//パラメータを大文字化
-	Set msg=$ZCVT(msg,"U")
-	//数値なら
-	If $ISVALIDNUM(msg) { Set msg=$$GetMessage(msg)	}
+	If $ISVALIDNUM(msg) { Set msg=$$GetMessage(msg)	} //数値なら
+	Else { Set msg=$ZCVT(msg,"U") } //パラメータを大文字化
  	//結果出力
 	Write "Hello, "_msg_" !",!
 }

@@ -1,27 +1,31 @@
+/// 
 Class HelloWorld.Process.Capitalize Extends Ens.BusinessProcessBPL [ ClassType = persistent ]
 {
+
+Storage Default
+{
+<Type>%Storage.Persistent</Type>
+}
 
 /// BPL Definition
 XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 {
 <process language='objectscript' request='HelloWorld.Request.SayHello' response='HelloWorld.Response.SayHello' height='2000' width='2000' >
 <context>
-<property name='Document' type='HelloWorld.Request.SayHello' >
-</property>
-<property name='RuleResult' type='%Integer' >
-</property>
+<property name='Document' type='HelloWorld.Request.SayHello' instantiate='0' />
+<property name='RuleResult' type='%Integer' instantiate='0' />
 </context>
-<sequence xend='550' yend='850' >
-<trace name='logging' value='"Capitalizeが呼ばれました"' xpos='550' ypos='200' />
-<transform name='DT' class='HelloWorld.Transform.Capitalize' source='request' target='context.Document' xpos='550' ypos='300' />
-<rule name='IsNumeric' rule='RuleIsNumeric'  resultLocation='context.RuleResult' xpos='550' ypos='400' >
+<sequence xend='200' yend='1000' >
+<trace name='logging' value='"Capitalizeが呼ばれました"' xpos='200' ypos='250' />
+<assign name="context.Document" property="context.Document" value="request" action="set" xpos='200' ypos='350' >
+<annotation><![CDATA[requestをcontext.Documentにアサイン]]></annotation>
+</assign>
+<rule name='IsNumeric' rule='RuleIsNumeric'  resultLocation='context.RuleResult' xpos='200' ypos='450' >
 </rule>
-<if name='IsRuleApplied' condition='context.RuleResult' xpos='550' ypos='500' xend='550' yend='750' >
-<annotation>ルールは真か？</annotation>
+<if name='IsRuleApplied' condition='context.RuleResult' xpos='200' ypos='550' xend='200' yend='900' >
+<annotation><![CDATA[ルールは真か？]]></annotation>
 <true>
-<call name='Say HelloSQL' target='HelloSQL' async='0' xpos='820' ypos='650' >
-<annotation>Say Hello From Someone
-</annotation>
+<call name='Say HelloSQL' target='HelloSQL' async='0' xpos='200' ypos='700' >
 <request type='HelloWorld.Request.SayHello' >
 <assign property="callrequest.BodyText" value="context.Document.BodyText" action="set" />
 </request>
@@ -31,8 +35,9 @@ XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 </call>
 </true>
 <false>
-<call name='Say Hello' target='Hello' async='0' xpos='550' ypos='650' >
-<annotation>Say Hello</annotation>
+<transform name='DT' class='HelloWorld.Transform.Capitalize' source='request' target='context.Document' xpos='470' ypos='700' />
+<call name='Say Hello' target='Hello' async='0' xpos='470' ypos='800' >
+<annotation><![CDATA[Say Hello]]></annotation>
 <request type='HelloWorld.Request.SayHello' >
 <assign property="callrequest.BodyText" value="context.Document.BodyText" action="set" />
 </request>
@@ -44,11 +49,6 @@ XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 </if>
 </sequence>
 </process>
-}
-
-Storage Default
-{
-<Type>%Storage.Persistent</Type>
 }
 
 }
