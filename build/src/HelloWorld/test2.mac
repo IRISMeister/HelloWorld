@@ -1,5 +1,5 @@
 ROUTINE test2
-main(msg="a student") public {
+main(msg="World") public {
 	#dim tService as Ens.BusinessService
 	Set tSC = ##class(Ens.Director).CreateBusinessService("DirectRouter",.tService)
  

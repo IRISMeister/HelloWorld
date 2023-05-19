@@ -1,0 +1,19 @@
+ROUTINE test2
+main(msg="World") public {
+	#dim tService as Ens.BusinessService
+	Set tSC = ##class(Ens.Director).CreateBusinessService("DirectDefered",.tService)
+ 
+	If ($IsObject(tService)) {
+		Set id="" For {
+			Set id=$O(^Result(id)) Quit:id=""
+			Set result=^Result(id,"data")
+			Set token=^Result(id,"token")
+	  		Set input = ##class(HelloWorld.Request.SayHelloDefered).%New()
+	  		Set input.Result=result
+	  		Set input.Token=token
+	  		Set tSC = tService.ProcessInput(input,.output)
+			Kill ^Result(id)
+		}
+	}
+	Quit
+}

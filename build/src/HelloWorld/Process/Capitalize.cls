@@ -6,14 +6,14 @@ XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 {
 <process language='objectscript' request='HelloWorld.Request.SayHello' response='HelloWorld.Response.SayHello' height='2000' width='2000' >
 <context>
-<property name='tmpRequest' type='HelloWorld.Request.SayHello' >
+<property name='Document' type='HelloWorld.Request.SayHello' >
 </property>
 <property name='RuleResult' type='%Integer' >
 </property>
 </context>
 <sequence xend='550' yend='850' >
 <trace name='logging' value='"Capitalizeが呼ばれました"' xpos='550' ypos='200' />
-<transform name='DT' class='HelloWorld.Transform.Capitalize' source='request' target='context.tmpRequest' xpos='550' ypos='300' />
+<transform name='DT' class='HelloWorld.Transform.Capitalize' source='request' target='context.Document' xpos='550' ypos='300' />
 <rule name='IsNumeric' rule='RuleIsNumeric'  resultLocation='context.RuleResult' xpos='550' ypos='400' >
 </rule>
 <if name='IsRuleApplied' condition='context.RuleResult' xpos='550' ypos='500' xend='550' yend='750' >
@@ -23,7 +23,7 @@ XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 <annotation>Say Hello From Someone
 </annotation>
 <request type='HelloWorld.Request.SayHello' >
-<assign property="callrequest.BodyText" value="context.tmpRequest.BodyText" action="set" />
+<assign property="callrequest.BodyText" value="context.Document.BodyText" action="set" />
 </request>
 <response type='HelloWorld.Response.SayHello' >
 <assign property="response.BodyText" value="callresponse.BodyText" action="set" />
@@ -34,7 +34,7 @@ XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 <call name='Say Hello' target='Hello' async='0' xpos='550' ypos='650' >
 <annotation>Say Hello</annotation>
 <request type='HelloWorld.Request.SayHello' >
-<assign property="callrequest.BodyText" value="context.tmpRequest.BodyText" action="set" />
+<assign property="callrequest.BodyText" value="context.Document.BodyText" action="set" />
 </request>
 <response type='HelloWorld.Response.SayHello' >
 <assign property="response.BodyText" value="callresponse.BodyText" action="set" />

@@ -1,18 +1,18 @@
 ROUTINE test0
 #include %occStatus
-main(msg="a student") public {
+main(msg="World") public {
 	//パラメータを大文字化
 	Set msg=$ZCVT(msg,"U")
 	//数値なら
 	If $ISVALIDNUM(msg) { Set msg=$$GetMessage(msg)	}
  	//結果出力
-	Write "Hello Wolrd, I am "_msg,!
+	Write "Hello, "_msg_" !",!
 }
 GetMessage(num) {
 	New $NAMESPACE
 	Set $NAMESPACE="USER"
-	Set result=##class(%SQL.Statement).%ExecDirect(,"select Name from Sample.Person where ID=?",num)
+	Set result=##class(%SQL.Statement).%ExecDirect(,"select city_ascii from worldcities where ID1=?",num)
 	Set tSC=result.%Next()
-	If $$$ISOK(tSC) { Return result.Name }
+	If $$$ISOK(tSC) { Return result."city_ascii" }
 	Return ""
 }

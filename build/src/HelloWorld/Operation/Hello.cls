@@ -8,7 +8,7 @@ Method Execute(pRequest As HelloWorld.Request.SayHello, Output pResponse As Hell
 {
 
 	Set pResponse=##class(HelloWorld.Response.SayHello).%New()
-	Set pResponse.BodyText="Hello World, I am "_pRequest.BodyText
+	Set pResponse.BodyText="Hello, "_pRequest.BodyText_" !"
 	Quit $$$OK
 }
 

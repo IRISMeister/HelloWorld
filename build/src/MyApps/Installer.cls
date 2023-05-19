@@ -13,14 +13,6 @@ XData setup [ XMLNamespace = INSTALLER ]
     <Production Name="HelloWorld.Production" AutoStart="1">
     </Production>
   </Namespace>
-
-  <Namespace Name="USER" Create="no">
-    <Import File="${SRCDIR}/Sample/" Flags="ck" Recurse="true"/>
-    <Invoke Class="Sample.Utils" Method="Generate" CheckStatus="false">
-    </Invoke>
-  </Namespace>
-
-
 </Manifest>
 }
 
@@ -52,6 +44,11 @@ ClassMethod setup(ByRef tVars) As %Status
     Set tSC = ##Class(Security.Applications).Modify(webapp,.props)
     $$$ThrowOnError(tSC)
 
+    #; Loading into USER because there is an ODBC DSN already.
+    Set $NAMESPACE="USER"
+    Set tSC=..runSQL()
+    Set tSC=..LoadCSV()
+
     Set $NAMESPACE=oldns
 
   } Catch(e) {
@@ -59,6 +56,36 @@ ClassMethod setup(ByRef tVars) As %Status
     zw tSC
   }
   Return tSC
+}
+
+ClassMethod runSQL() As %Status
+{
+  Set stmt=##class(%SQL.Statement).%New()
+  Set status = stmt.%PrepareClassQuery("%Library.File","FileSet")
+  Set rs=stmt.%Execute("/home/irisowner/sql","*.sql")
+  While(rs.%Next()) {
+    Do $SYSTEM.SQL.Schema.ImportDDL(rs.%CurrentResult.Name,"/home/irisowner/import_Errors.log")
+  }
+
+  Return $$$OK
+}
+
+ClassMethod LoadCSV() As %Status
+{
+  Set opt={"from": {"file": {"header": true,"charset": "UTF-8"}}}.%ToJSON()
+
+  Set sql="LOAD DATA FROM FILE '/home/irisowner/csv/worldcities.csv' INTO worldcities USING "_opt
+
+  set stmt = ##class(%SQL.Statement).%New()
+  Set tSC=stmt.%Prepare(sql)
+  set rs = stmt.%Execute()
+  if rs.%SQLCODE > 0 {
+    zw rs
+    Return '$$$OK
+  } else {
+    Return $$$OK
+  }
+  Return $$$OK
 }
 
 }
