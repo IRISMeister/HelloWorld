@@ -1,0 +1,35 @@
+ROUTINE debug
+#include EnsConstants
+ ; 対象BPのPool=1にする 
+ ;プロダクションを開始しておく
+ ; "Capitalize" BPを停止する (今から実行するプロセスがBPになり替わるため)
+ ; >Do $system.Process.Terminate(対象のpid)
+ ; 適当な場所にブレークポイントを設定する
+ ; (HelloWorld.Process.Capitalize.Thread1).S1()など
+ Set body = ##class(HelloWorld.Request.SayHello).%New()
+ set body.BodyText="World"
+ Do body.%Save()
+
+ Set resbody = ##class(HelloWorld.Response.SayHello).%New()
+ Do resbody.%Save()
+  
+ Set tSC=##class(Ens.MessageHeader).NewRequestMessage(.req,body)
+ Set tSC=req.NewResponseMessage(.res,resbody)
+
+ /*
+ s req=##class(Ens.MessageHeader).%New()
+ s res=##class(Ens.MessageHeader).%New()
+ s req.MessageBodyClassName="HelloWorld.Request.SayHello"
+ s req.MessageBodyId=body.%Id()
+ s req.Type=$$$eMessageTypeRequest
+ Set req.Priority=$$$eMessagePrioritySync
+ Do req.%Save()
+ s res.MessageBodyClassName="HelloWorld.Response.SayHello"
+ s res.MessageBodyId=resbody.%Id()
+ s res.Type=$$$eMessageTypeResponse
+ Set res.Priority=$$$eMessagePrioritySync
+ Do res.%Save()
+ */
+
+ s p=##class(HelloWorld.Process.Capitalize).%New("Capitalize")
+ Set tSC=p.MessageHeaderHandler(req,res)
